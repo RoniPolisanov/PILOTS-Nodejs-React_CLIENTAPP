@@ -112,6 +112,13 @@ class ProducerHome extends Component {
     
     showDetails(){
         return(
+        <div className="consumerProfile">
+            <ConsumerHeader> </ConsumerHeader>
+            <h1>{this.state.updatedDetails.full_name}</h1>
+            <article className='profilePicture'>
+                <img src={JSON.parse(sessionStorage.getItem('userDetails')).imageUrl}></img>
+            </article>
+        
         <div className="card">
             <p> User Name: {this.state.updatedDetails.user_name} </p>
             <p> Full Name: {this.state.updatedDetails.full_name} </p>
@@ -121,20 +128,14 @@ class ProducerHome extends Component {
             <p> VIP: {this.vip} </p>
             <MdEdit onClick={this.doEdit}></MdEdit>
         </div>
+        </div>
         )
     }
 
     render() {
         return (
-            <div className="consumerProfile">
-                <ConsumerHeader> </ConsumerHeader>
-                <h1>{this.state.updatedDetails.full_name}</h1>
-                <article className='profilePicture'>
-                    <img src={JSON.parse(sessionStorage.getItem('userDetails')).imageUrl}></img>
-                </article>
-                { this.state.loading ? (this.state.edit ? this.renderFORM() : this.showDetails()) :
-                    <div className='sweet-loading'> <BeatLoader color={'#123abc'}/> </div> }
-            </div>
+                 this.state.loading ? (this.state.edit ? this.renderFORM() : this.showDetails()) :
+                    <div className='sweet-loading'> <BeatLoader color={'#123abc'}/> </div> 
         )
     }
 }

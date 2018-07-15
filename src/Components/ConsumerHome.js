@@ -18,6 +18,7 @@ class ConsumerHome extends Component {
         this.selected = this.selected.bind(this);
         this.reload = this.reload.bind(this);
     }
+
     // Fetch the updated projects and store in state
     componentWillMount() {
         axios.get('https://pilotsapp.herokuapp.com/project')
@@ -33,9 +34,11 @@ class ConsumerHome extends Component {
             });
     }
 
+    // 
     reload(){
         window.location.reload();
     }
+
     selected(cat){
         var filtered = [];
         this.state.projects.map((project) => {
@@ -51,6 +54,16 @@ class ConsumerHome extends Component {
 
     mainRender() {
         return (
+            <div>
+            <ConsumerHeader></ConsumerHeader>
+                <button onClick={this.reload}> Back</button>
+                <h1>{JSON.parse(sessionStorage.getItem('userPilotsDetails')).full_name}</h1>
+                <article className='profilePicture'>
+                    <img src={JSON.parse(sessionStorage.getItem('userDetails')).imageUrl}></img>
+                </article>
+                <div>
+                    <h5> Categories. </h5>
+                </div>
             <div className='consumerHome'>
                 <div className="container">
                     <div className="row">
@@ -85,6 +98,7 @@ class ConsumerHome extends Component {
                     </div>
                 </div>
             </div>
+            </div>
         )
     }
 
@@ -92,21 +106,8 @@ class ConsumerHome extends Component {
     // Showing all the projects to consumer
     showProjects(){
         return(
-            <div className='projectList'>
-            {this.state.projects.length ?
-            <ProjectList projects={this.state.projects}>
-
-            </ProjectList> 
-            :
-            <h3>No projects available under this category.</h3> }
-            </div>
-        )
-    }
-
-    render() {
-        return(
-        <div>
-                <ConsumerHeader></ConsumerHeader>
+            <div>
+                                        <ConsumerHeader></ConsumerHeader>
                 <button onClick={this.reload}> Back</button>
                 <h1>{JSON.parse(sessionStorage.getItem('userPilotsDetails')).full_name}</h1>
                 <article className='profilePicture'>
@@ -115,6 +116,22 @@ class ConsumerHome extends Component {
                 <div>
                     <h5> Categories. </h5>
                 </div>
+            <div className='projectList'>
+            {this.state.projects.length ?
+            <ProjectList projects={this.state.projects}>
+
+            </ProjectList> 
+            :
+            <h3>No projects available under this category.</h3> }
+            </div>
+            </div>
+        )
+    }
+
+    render() {
+        return(
+        <div>
+
             {this.state.loading ? ( this.state.isSelected ? this.showProjects() : this.mainRender() ) :     
             <div className='sweet-loading'>
             <BeatLoader color={'#123abc'} />

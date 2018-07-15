@@ -147,6 +147,7 @@ class ProjectProfile extends Component {
             this.state.loading ?
                 (<div className="producerProfile">
                     <ConsumerHeader></ConsumerHeader>
+                    <h1>{JSON.parse(sessionStorage.getItem('userPilotsDetails')).full_name}</h1>
                     <article className='profilePicture'>
                         <img src={JSON.parse(sessionStorage.getItem('userDetails')).imageUrl}></img>
                     </article>
