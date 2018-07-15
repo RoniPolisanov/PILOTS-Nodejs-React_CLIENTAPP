@@ -160,6 +160,4 @@ class EditProjectProfile extends Component {
     }
 }
 
-export default EditProjectProfile;
-
-
+export default ProjectProfile;

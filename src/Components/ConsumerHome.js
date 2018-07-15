@@ -95,7 +95,6 @@ class ConsumerHome extends Component {
             <div className='projectList'>
             {this.state.projects.length ?
             <ProjectList projects={this.state.projects}>
-            <button onClick={this.reload}> Back</button>
 
             </ProjectList> 
             :
@@ -108,6 +107,7 @@ class ConsumerHome extends Component {
         return(
         <div>
                 <ConsumerHeader></ConsumerHeader>
+                <button onClick={this.reload}> Back</button>
                 <h1>{JSON.parse(sessionStorage.getItem('userPilotsDetails')).full_name}</h1>
                 <article className='profilePicture'>
                     <img src={JSON.parse(sessionStorage.getItem('userDetails')).imageUrl}></img>
