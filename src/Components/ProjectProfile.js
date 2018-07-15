@@ -6,7 +6,7 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 
-class EditProjectProfile extends Component {
+class ProjectProfile extends Component {
     constructor(props) {
         super(props)
 
