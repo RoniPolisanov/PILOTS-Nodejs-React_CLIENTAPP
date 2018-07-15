@@ -130,14 +130,7 @@ class EditProjectProfile extends Component {
                     <p>Status: <meter value={this.state.project.goal_status} min="0" max={this.state.project.goal}></meter> {isNaN((this.state.project.goal_status / this.state.project.goal) * 100) ? '0' : ((this.state.project.goal_status / this.state.project.goal) * 100)}%</p>
                     <p>Opening Date: {this.state.project.open_timestamp}</p>
                     <p>Deadline: {this.state.project.deadline}</p>
-                    {
-                        this.state.project.subscribers.map((sub) => {
-                            if (this.state.project.subscribers.length && (JSON.parse(sessionStorage.getItem("userPilotsDetails"))._id == sub)){
-                                this.state.voted = true;
-                            }
-                        })
-                    }
-                    {this.state.voted ? <button onClick={this.unSubscribe}>Unsubscribe</button> : <button onClick={this.subscribe}>Subscribe</button>}
+
                     <button onClick={this.positiveVote}>Vote Positive</button>
                     <button onClick={this.negativeVote}>Vote Negative</button>
                 </div>
