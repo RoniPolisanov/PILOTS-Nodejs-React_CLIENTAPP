@@ -16,6 +16,7 @@ class ConsumerHome extends Component {
         }
         this.showProjects = this.showProjects.bind(this);
         this.selected = this.selected.bind(this);
+        this.reload = this.reload.bind(this);
     }
     // Fetch the updated projects and store in state
     componentWillMount() {
@@ -32,6 +33,9 @@ class ConsumerHome extends Component {
             });
     }
 
+    reload(){
+        window.location.reload();
+    }
     selected(cat){
         var filtered = [];
         this.state.projects.map((project) => {
@@ -91,6 +95,8 @@ class ConsumerHome extends Component {
             <div className='projectList'>
             {this.state.projects.length ?
             <ProjectList projects={this.state.projects}>
+            <button onClick={this.reload}> Back</button>
+
             </ProjectList> 
             :
             <h3>No projects available under this category.</h3> }

@@ -5,6 +5,7 @@ import ConsumerHeader from './ConsumerHeader'
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 
+
 class EditProjectProfile extends Component {
     constructor(props) {
         super(props)
@@ -27,7 +28,9 @@ class EditProjectProfile extends Component {
     componentWillMount() {
         this.fetchProject();
     }
-
+    componentDidMount() {
+        this.fetchProject();
+    }
     fetchProject(){
         axios.get('https://pilotsapp.herokuapp.com/project/getById/' + sessionStorage.getItem('projectID'))
             .then((response) => {
@@ -40,31 +43,27 @@ class EditProjectProfile extends Component {
             .catch(error => {
                 console.log(error);
             });
+            
     }
 
     subscribe(){
-        console.log(JSON.parse(sessionStorage.getItem("userPilotsDetails"))._id)
-        console.log(sessionStorage.getItem('projectID'))
+        NotificationManager.info('Youre now subscribed to ' + this.state.project.title + 'project.', 'Notice', 3000);
         axios.put('https://pilotsapp.herokuapp.com/consumer/subscribe/' + JSON.parse(sessionStorage.getItem("userPilotsDetails"))._id, {
             projId: sessionStorage.getItem('projectID')
         }).then(response => {
             console.log(response);
-
             this.setState({
                 loading: false
             })
         })
         .catch(error => {
             console.log(error);
-        });
-        NotificationManager.info('Youre now subscribed to ' + this.state.project.title + 'project.', 'Notice', 3000);
+        }).then(() =>{ window.location.reload()})
         this.fetchProject();
     }
 
     unSubscribe(){
-        console.log(JSON.parse(sessionStorage.getItem("userPilotsDetails"))._id)
-        console.log(sessionStorage.getItem('projectID'))
-
+        NotificationManager.warning('Youre now Unsubscribed to ' + this.state.project.title + 'project.', 'Notice', 3000);
         axios.put('https://pilotsapp.herokuapp.com/consumer/unsubscribe/' + JSON.parse(sessionStorage.getItem("userPilotsDetails"))._id, {
             projId: sessionStorage.getItem('projectID')            
           })
@@ -73,13 +72,11 @@ class EditProjectProfile extends Component {
             this.setState({
                 loading: false,
             })
-          })
-          .catch(error => {
+        })
+        .catch(error => {
             console.log(error);
-          });
-
-
-        NotificationManager.warning('Youre now Unsubscribed to ' + this.state.project.title + 'project.', 'Notice', 3000);
+        }).then(() =>{ window.location.reload()})
+        
         this.fetchProject();
     }
 
@@ -88,6 +85,8 @@ class EditProjectProfile extends Component {
             projId: sessionStorage.getItem('projectID')
         }).then(response => {
             console.log(response);
+            NotificationManager.success('You voted for ' + this.state.project.title + 'project.', 'Notice', 3000);
+            this.fetchProject();
 
             this.setState({
                 loading: false
@@ -96,8 +95,6 @@ class EditProjectProfile extends Component {
         .catch(error => {
             console.log(error);
         });
-        NotificationManager.success('You voted for ' + this.state.project.title + 'project.', 'Notice', 3000);
-        this.fetchProject();
     }
 
     negativeVote(){
@@ -105,6 +102,8 @@ class EditProjectProfile extends Component {
             projId: sessionStorage.getItem('projectID')
         }).then(response => {
             console.log(response);
+            NotificationManager.error('You voted against ' + this.state.project.title + 'project.', 'Notice', 3000);
+            this.fetchProject();
 
             this.setState({
                 loading: false
@@ -113,8 +112,6 @@ class EditProjectProfile extends Component {
         .catch(error => {
             console.log(error);
         });
-        NotificationManager.error('You voted against ' + this.state.project.title + 'project.', 'Notice', 3000);
-        this.fetchProject();
     }
 
     showDetails() {
