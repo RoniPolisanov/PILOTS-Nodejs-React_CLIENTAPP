@@ -1,0 +1,12 @@
+active{
+    background-color: #212F3D;
+    color: white;
+    font-Weight: bold;
+};
+
+header{
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+};
+
