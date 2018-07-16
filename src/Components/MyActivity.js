@@ -55,6 +55,7 @@ class ConsumerHome extends Component {
 
     }
 
+    // Filtering by the projects by activities
     filterActivities(){
         let filtered = [
             { subscribedProjects: [] },
@@ -87,37 +88,33 @@ class ConsumerHome extends Component {
 
     }
 
+    // Showing the filtered activities
     showActivities(){
         return(
             <div>
-            <p>Subscribed projects:</p>
-            <ProjectList projects={this.state.updatedDetails[0].subscribedProjects}>
-            </ProjectList>
+                <h5 style={{fontFamily: "ABeeZee, sans-serif", textAlign: 'center', color: "orange"}}>Subscriptions</h5>                
+                <ProjectList projects={this.state.updatedDetails[0].subscribedProjects}>
+                </ProjectList>
 
-            <p>Positive Votes projects:</p>
-            <ProjectList projects={this.state.updatedDetails[1].positiveProjects}>
-            </ProjectList>
-            
-            <p>Negative Votes projects:</p>
-            <ProjectList projects={this.state.updatedDetails[2].negativeProjects}>
-            </ProjectList>
+                <h5 style={{fontFamily: "ABeeZee, sans-serif", textAlign: 'center', color: "green"}}>Promoted projects</h5>                
+                <ProjectList projects={this.state.updatedDetails[1].positiveProjects}>
+                </ProjectList>
+
+                <h5 style={{fontFamily: "ABeeZee, sans-serif", textAlign: 'center', color: "red"}}>Demoted projects</h5>                
+                <ProjectList projects={this.state.updatedDetails[2].negativeProjects}>
+                </ProjectList>
             </div>
         )
     }
-       
 
     render() {
         return(
         <div>
-            <ConsumerHeader></ConsumerHeader>
-            <h1>{JSON.parse(sessionStorage.getItem('userPilotsDetails')).full_name}</h1>
-            <article className='profilePicture'>
-            <img src={JSON.parse(sessionStorage.getItem('userDetails')).imageUrl}></img>
-            </article>
-            <div>
-                <h5> Categories. </h5>
-            </div>
-
+        <ConsumerHeader></ConsumerHeader>
+                <img src={JSON.parse(sessionStorage.getItem('userDetails')).imageUrl} style={{ height: '40px', width: '40px', float: 'right', borderRadius: '50%', padding: '3px 3px 3px 3px' }}></img>
+                <div style={{ textAlign: 'left', justifyContent: 'center', marginTop: '10px'}}>
+                    <h6 style={{fontFamily: "ABeeZee, sans-serif"}}>Hello, {JSON.parse(sessionStorage.getItem('userPilotsDetails')).full_name}</h6>
+                </div>
             {this.state.loading ? (this.state.filtered ? this.showActivities(): this.filterActivities() ) :
             <div className='sweet-loading'>
             <BeatLoader color={'#123abc'} />

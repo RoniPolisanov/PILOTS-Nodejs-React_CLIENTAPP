@@ -47,9 +47,6 @@ class ProducerHome extends Component {
             .catch(error => {
                 console.log(error);
             });
-
-        if (!this.state.updatedDetails.vip) this.vip = "no";
-        else this.vip = "yes";
     }
     
     save(e) {
@@ -83,45 +80,62 @@ class ProducerHome extends Component {
             }) 
     }
 
+
+
     renderFORM() {
         return (
-            <div className="card">
-                <form>
-                    <label>
-                        User Name:
-                        <input name='user_name' type='text' value={this.state.updatedDetails.user_name} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Full Name:
-                        <input name='full_name' type='text' value={this.state.updatedDetails.full_name} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Password:
-                        <input name='password' type='text' value={this.state.updatedDetails.password} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Email:
-                        <input name='email' type='text' value={this.state.updatedDetails.email} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Phone Number:
-                        <input name='phone' type='text' value={this.state.updatedDetails.phone} onChange={this.handleChange} />
-                    </label>
-                    <button onClick={this.save}><MdSave></MdSave></button>     
-                </form>
-            </div>)
+            <div>
+                <h5 style={{ fontFamily: "ABeeZee, sans-serif", textAlign: 'center' }}>Edit profile</h5>
+                <div className="card bg-light mb-3">
+                    <div className='card-body'>
+                        <form>
+                            <div className="form-group">
+                                <label htmlfor="exampleFormControlTextarea1"><b> User Name: </b></label>
+                                <textarea name='user_name' type='text' value={this.state.updatedDetails.user_name} onChange={this.handleChange} className="form-control" id="exampleFormControlTextarea1"></textarea>
+                            </div>
+                            <div className="form-group">
+                                <label htmlfor="exampleFormControlTextarea2"><b> Full Name: </b></label>
+                                <textarea name='full_name' type='text' value={this.state.updatedDetails.full_name} onChange={this.handleChange} className="form-control" id="exampleFormControlTextarea2"></textarea>
+                            </div>
+                            <div className="form-group">
+                                <label htmlfor="exampleFormControlTextarea3"><b> Password: </b></label>
+                                <textarea name='password' type='text' value={this.state.updatedDetails.password} onChange={this.handleChange} className="form-control" id="exampleFormControlTextarea3"></textarea>
+                            </div>
+                            <div className="form-group">
+                                <label htmlfor="exampleFormControlTextarea4"><b> Email: </b></label>
+                                <textarea name='email' type='text' value={this.state.updatedDetails.email} onChange={this.handleChange} className="form-control" id="exampleFormControlTextarea4"></textarea>
+                            </div>
+                            <div className="form-group">
+                                <label htmlfor="exampleFormControlTextarea5"><b> Phone Number: </b></label>
+                                <textarea name='phone' type='text' value={this.state.updatedDetails.phone} onChange={this.handleChange} className="form-control" id="exampleFormControlTextarea5"></textarea>
+                            </div>
+                            <div className="d-flex justify-content-center">
+                                <MdSave style={{ color: 'black', fontSize: "30px" }} onClick={this.save}></MdSave>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        )
     }
+
 
     showDetails() {
         return (
-            <div className="card">
-                <p> User Name: {this.state.updatedDetails.user_name} </p>
-                <p> Full Name: {this.state.updatedDetails.full_name} </p>
-                <p> Password: {this.state.updatedDetails.password} </p>
-                <p> Email: {this.state.updatedDetails.email} </p>
-                <p> Phone Number: {this.state.updatedDetails.phone} </p>
-                <button onClick={this.doEdit}><MdEdit></MdEdit></button>
+            <div>
+            <h5 style={{fontFamily: "ABeeZee, sans-serif", textAlign: 'center'}}>Profile Details</h5>                
+            <div className="card bg-light mb-3">
+                <div className='card-body'>
+                    <MdEdit style={{color: 'gray', fontSize: "30px", float: "right"}} onClick={this.doEdit}></MdEdit>
+                    <p><b> User Name:</b> {this.state.updatedDetails.user_name} </p>
+                    <p><b> Full Name: </b>{this.state.updatedDetails.full_name} </p>
+                    <p><b> Email: </b>{this.state.updatedDetails.email} </p>
+                    <p><b> Password: </b>{this.state.updatedDetails.password} </p>
+                    <p><b> Phone Number: </b>{this.state.updatedDetails.phone} </p>
+                </div>
             </div>
+            </div>
+
         )
     }
 
@@ -129,10 +143,10 @@ class ProducerHome extends Component {
         return (
             <div className="producerProfile">
                 <ProducerHeader></ProducerHeader>
-                <h1>{this.state.updatedDetails.full_name}</h1>
-                <article className='profilePicture'>
-                    <img src={JSON.parse(sessionStorage.getItem('userDetails')).imageUrl}></img>
-                </article>
+                <img src={JSON.parse(sessionStorage.getItem('userDetails')).imageUrl} style={{ height: '40px', width: '40px', float: 'right', borderRadius: '50%', padding: '3px 3px 3px 3px' }}></img>
+                <div style={{ textAlign: 'left', justifyContent: 'center', marginTop: '10px'}}>
+                    <h6 style={{fontFamily: "ABeeZee, sans-serif"}}>Hello, {JSON.parse(sessionStorage.getItem('userPilotsDetails')).full_name}</h6>
+                </div><p></p>
                 <NotificationContainer />
                 {this.state.loading ? (this.state.edit ? this.renderFORM() : this.showDetails()) :
                     <div className='sweet-loading'>

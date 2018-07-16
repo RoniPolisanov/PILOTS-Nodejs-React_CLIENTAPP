@@ -13,7 +13,7 @@ class ProjectList extends Component {
 
     render() {
         return (
-            <div className="row">
+            <div className="row" style={{margin: '0 auto'}}>
                 {this.state.projects.map((proj) => {
                     return (
                         <div className="col" index={proj._id} key={proj._id} >

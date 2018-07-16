@@ -59,14 +59,11 @@ class Login extends Component {
 
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col">
-                    </div>
-                    <div className="col order-12">
-                    </div>
-                    <div className="col order-1">
-                    <GoogleLogin style={google}
+            <div >
+                <div style={{backgroundImage: `url(./images/logo.JPG)`, backgroundSize: 'cover', margin: '0 auto', width: '250px', height: '250px', marginTop: '130px'}}>
+                </div><p style={{marginTop: '50px'}}></p>
+                    <div className="d-flex justify-content-center">
+                    <GoogleLogin style={{backgroundColor: "#DD4B39"}}
                             clientId={'27160300776-vrr4hvulicl4e83njgaj6dhbgpbrs3to.apps.googleusercontent.com'}
                             buttonText="GOOGLE ME"
                             onSuccess={this.responseGoogle}
@@ -76,7 +73,6 @@ class Login extends Component {
                         </button>
                     </GoogleLogin>
                     </div>
-                </div>
             </div>
         )
     }
