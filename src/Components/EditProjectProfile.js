@@ -27,6 +27,7 @@ class EditProjectProfile extends Component {
         this.fetchProject = this.fetchProject.bind(this);
     }
 
+    //fetch data from DB
     fetchProject(){
         axios.get('https://pilotsapp.herokuapp.com/project/getById/' + sessionStorage.getItem('projectID'))
             .then((response) => {
@@ -45,6 +46,7 @@ class EditProjectProfile extends Component {
         this.fetchProject()
     }
 
+    //save data onto DB
     save(e) {
         e.preventDefault();
         axios.put('https://pilotsapp.herokuapp.com/project/updateProject/' + this.state.project._id, {
@@ -64,6 +66,7 @@ class EditProjectProfile extends Component {
         });
     }
 
+    //enable editing mode
     doEdit() {
         this.setState({ edit: true })
     }
@@ -76,6 +79,7 @@ class EditProjectProfile extends Component {
         })
     }
 
+    //delete a project
     delete(e){
         e.preventDefault()
         axios.delete('https://pilotsapp.herokuapp.com/project/deleteProject/' + this.state.project._id)
@@ -90,6 +94,8 @@ class EditProjectProfile extends Component {
         this.props.history.push('/ProducerHome')
     }
 
+
+    //render for editing
     renderFORM() {
         return (
             <div className="card bg-light mb-3">
@@ -123,6 +129,7 @@ class EditProjectProfile extends Component {
     }
 
 
+    //render for viewing
     showDetails() {
         return (
             <div>
@@ -146,6 +153,7 @@ class EditProjectProfile extends Component {
 
     }
 
+    //main render
     render() {
         return (
             <div>
@@ -155,7 +163,7 @@ class EditProjectProfile extends Component {
                     <h6 style={{ fontFamily: "ABeeZee, sans-serif" }}>Hello, {JSON.parse(sessionStorage.getItem('userPilotsDetails')).full_name}</h6>
                 </div><p></p>
                 <NotificationContainer />
-
+                {/*here we check if the data has been loaded*/}
                 {this.state.loading ?
                     (
                         <div className="producerProfile">

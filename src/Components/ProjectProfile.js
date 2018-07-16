@@ -8,9 +8,6 @@ import IoFiling from 'react-icons/lib/io/filing';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 
-function sleep(time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-}
 
 class ProjectProfile extends Component {
     constructor(props) {
@@ -42,57 +39,63 @@ class ProjectProfile extends Component {
             .then((response) => {
                 console.log(response.data);
                 this.setState({
-                    project: response.data
+                    project: response.data,
+                    loading: true
                 })
             })
             .catch(error => {
                 console.log(error);
-            })
-            .then(() =>{
-                this.setState({
-                    loading: true
-                })
-            })
+            });
     }
 
+    // delete(e){
+    //     e.preventDefault()
+    //     axios.delete('https://pilotsapp.herokuapp.com/project/deleteProject/' + this.state.project._id)
+    //     .then(response => {
+    //         console.log(response);
+    //         NotificationManager.warning(`'${this.state.project.title}' has been deleted successfully`, '', 3000);
+    //     })
+    //     .catch(error => {
+    //         console.log(error);
+    //     });
+
+    //     this.props.history.push('/ProducerHome')
+    // }
     // Handle subscribe event
-    subscribe(e){
+    subscribe(){
         axios.put('https://pilotsapp.herokuapp.com/consumer/subscribe/' + JSON.parse(sessionStorage.getItem("userPilotsDetails"))._id, {
             projId: sessionStorage.getItem('projectID')
         }).then(response => {
+            this.fetchProject();
             console.log(response);
             NotificationManager.info('Youre now subscribed to ' + this.state.project.title + ' project.', 'Notice', 3000);
         })
         .catch(error => {
             console.log(error);
-        })
-        this.fetchProject();
-        sleep(500).then(() => {
-            this.setState({
-                loading: false
-            })
+        }).then(() => {window.location.reload();})
+
+        this.setState({
+            loading: false
         })
 
-        
     }
 
     // Handle unSubscribe event
-    unSubscribe(e){
+    unSubscribe(){
         axios.put('https://pilotsapp.herokuapp.com/consumer/unsubscribe/' + JSON.parse(sessionStorage.getItem("userPilotsDetails"))._id, {
             projId: sessionStorage.getItem('projectID')            
         })
         .then(response => {
+            this.fetchProject();
             console.log(response);
             NotificationManager.warning('Youre now Unsubscribed to ' + this.state.project.title + ' project.', 'Notice', 3000);
         })
         .catch(error => {
             console.log(error);
-        })
-        this.fetchProject();
-        sleep(500).then(() => {
-            this.setState({
-                loading: false
-            })
+        }).then(() => {window.location.reload();})
+
+        this.setState({
+            loading: false
         })
     }
 
@@ -101,14 +104,15 @@ class ProjectProfile extends Component {
         axios.put('https://pilotsapp.herokuapp.com/consumer/voteProject/' + JSON.parse(sessionStorage.getItem("userPilotsDetails"))._id + '/1', {
             projId: sessionStorage.getItem('projectID')
         }).then(response => {
+            this.fetchProject();
             console.log(response);
             NotificationManager.success('You voted for ' + this.state.project.title + ' project.', 'Notice', 3000);
         })
         .catch(error => {
             console.log(error);
-            NotificationManager.error('Already voted for ' + this.state.project.title + ' project.', 'Error', 3000);
-        })
-        this.fetchProject();
+            //NotificationManager.error('Already voted for ' + this.state.project.title + ' project.', 'Error', 3000);
+        }).then(() => {window.location.reload();})
+
         this.setState({
             loading: false
         })
@@ -119,14 +123,15 @@ class ProjectProfile extends Component {
         axios.put('https://pilotsapp.herokuapp.com/consumer/voteProject/' + JSON.parse(sessionStorage.getItem("userPilotsDetails"))._id + '/0', {
             projId: sessionStorage.getItem('projectID')
         }).then(response => {
+            this.fetchProject();
             console.log(response);
             NotificationManager.error('You voted against ' + this.state.project.title + ' project.', 'Notice', 3000);
         })
         .catch(error => {
             console.log(error);
-            NotificationManager.error('Already voted for ' + this.state.project.title + ' project.', 'Error', 3000);
-        })
-        this.fetchProject();
+            //NotificationManager.error('Already voted for ' + this.state.project.title + ' project.', 'Error', 3000);
+        }).then(() => {window.location.reload();})
+
         this.setState({
             loading: false
         })
@@ -156,9 +161,20 @@ class ProjectProfile extends Component {
                         })
                         }
                         <div className="d-flex justify-content-center">
+
+                            {this.state.voted ? 
+                            <div>
                             <IoCheckmarkCircled style={{color: 'green', fontSize: "35px", marginRight: "20px", marginLeft: "20px"}} onClick={this.positiveVote}></IoCheckmarkCircled>
                             <IoCloseCircled style={{color: 'red', fontSize: "35px", marginRight: "20px", marginLeft: "20px"}} onClick={this.negativeVote}></IoCloseCircled>
-                            {this.state.voted ? <IoFiling style={{color: 'orange', fontSize: "40px", marginRight: "20px", marginLeft: "20px"}} onClick={this.unSubscribe}></IoFiling> : <IoFiling style={{color: 'black', fontSize: "40px", marginRight: "20px", marginLeft: "20px"}} onClick={this.subscribe}></IoFiling>}
+                            <IoFiling style={{color: 'orange', fontSize: "40px", marginRight: "20px", marginLeft: "20px"}} onClick={this.unSubscribe}></IoFiling>
+                            </div>
+                                : 
+                                <div>
+                            <IoCheckmarkCircled style={{color: 'green', fontSize: "35px", marginRight: "20px", marginLeft: "20px"}} onClick={this.positiveVote}></IoCheckmarkCircled>
+                            <IoCloseCircled style={{color: 'red', fontSize: "35px", marginRight: "20px", marginLeft: "20px"}} onClick={this.negativeVote}></IoCloseCircled>
+                            <IoFiling style={{color: 'black', fontSize: "40px", marginRight: "20px", marginLeft: "20px"}} onClick={this.subscribe}></IoFiling>
+                            </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -173,7 +189,7 @@ class ProjectProfile extends Component {
                 <img src={JSON.parse(sessionStorage.getItem('userDetails')).imageUrl} style={{ height: '40px', width: '40px', float: 'right', borderRadius: '50%', padding: '3px 3px 3px 3px' }}></img>
                 <div style={{ textAlign: 'left', justifyContent: 'center', marginTop: '10px' }}>
                 </div>
-                {(this.state.loading) ?
+                {this.state.loading ?
                 (<div className="producerProfile">
                     <NotificationContainer />
                         <h6  style={{fontFamily: "ABeeZee, sans-serif"}}>Hello, {JSON.parse(sessionStorage.getItem('userPilotsDetails')).full_name}</h6>                

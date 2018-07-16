@@ -58,13 +58,13 @@ class ProducerHeader extends Component{
         return(
             <div style={this.header}>
             <MdKeyboardArrowLeft onClick={this.reload}> </MdKeyboardArrowLeft>
-                <NavLink style={this.NavLink} exact to='/ProducerHome' activeStyle={this.active}>
+                <NavLink style={this.NavLink} exact to='/ProducerHome' activeStyle={this.active}>  {/*navlink to main producer page*/}
                     Home
                 </NavLink>
-                <NavLink style={this.NavLink}exact to='/ProducerProfile' activeStyle={this.active}>
+                <NavLink style={this.NavLink}exact to='/ProducerProfile' activeStyle={this.active}> {/*navlink to producer profile*/}
                     Profile
                 </NavLink>
-                <NavLink style={this.NavLink} exact to='/' activeStyle={this.active}>
+                <NavLink style={this.NavLink} exact to='/' activeStyle={this.active}> {/*navlink to logout from use*/}
                     <p onClick={this.logout}>Logout</p>
                 </NavLink>
             </div>

@@ -49,6 +49,7 @@ class ProducerHome extends Component {
             });
     }
     
+    //this functions saves the data intercepted from the user and sends it to the API
     save(e) {
         e.preventDefault();
         axios.put('https://pilotsapp.herokuapp.com/producer/updateProfile/' + JSON.parse(sessionStorage.getItem('userPilotsDetails'))._id, {
@@ -67,10 +68,12 @@ class ProducerHome extends Component {
         });
     }
 
+    //function that enables editing mode
     doEdit() {
         this.setState({ edit: true })
     }
 
+    //function that handles change in textbox and udpdate it in render
     handleChange(event) {
 
         let detailsCopy = JSON.parse(JSON.stringify(this.state.updatedDetails))
@@ -81,7 +84,7 @@ class ProducerHome extends Component {
     }
 
 
-
+  //render for editing mode
     renderFORM() {
         return (
             <div>
@@ -119,7 +122,7 @@ class ProducerHome extends Component {
         )
     }
 
-
+ //render for view mode
     showDetails() {
         return (
             <div>
@@ -139,6 +142,7 @@ class ProducerHome extends Component {
         )
     }
 
+    //main render
     render() {
         return (
             <div className="producerProfile">
@@ -148,6 +152,7 @@ class ProducerHome extends Component {
                     <h6 style={{fontFamily: "ABeeZee, sans-serif"}}>Hello, {JSON.parse(sessionStorage.getItem('userPilotsDetails')).full_name}</h6>
                 </div><p></p>
                 <NotificationContainer />
+                {/*here we check if the data has been loaded*/}
                 {this.state.loading ? (this.state.edit ? this.renderFORM() : this.showDetails()) :
                     <div className='sweet-loading'>
                         <BeatLoader color={'#123abc'} />

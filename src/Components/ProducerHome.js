@@ -61,11 +61,12 @@ class ProducerHome extends Component {
         this.fetchProjects()
     }
 
-
+    //toggle editing mode
     doEdit() {
         this.setState({ edit: true })
     }
-
+    
+    //create a new project
     createProject(e) {
         e.preventDefault();
         let projectCopy = JSON.parse(JSON.stringify(this.state.projectToAdd))
@@ -99,6 +100,7 @@ class ProducerHome extends Component {
 
     }
 
+    //function that handles change in textbox and udpdate it in render
     handleChange(event) {
         let projectCopy = JSON.parse(JSON.stringify(this.state.projectToAdd))
         projectCopy[event.target.name] = event.target.value;
@@ -107,6 +109,7 @@ class ProducerHome extends Component {
         })
     }
 
+    //render for editing mode
     renderFORM() {
         return (
             <div className="card bg-light mb-3">
@@ -141,7 +144,7 @@ class ProducerHome extends Component {
         )
     }
 
-    // Showing all the projects to consumer
+    //render for view mode
     showProjects() {
         return (
             <div>
@@ -156,6 +159,8 @@ class ProducerHome extends Component {
         )
     }
 
+
+    //main render
     render() {
         return (
             <div>
@@ -165,6 +170,7 @@ class ProducerHome extends Component {
                     <h6 style={{fontFamily: "ABeeZee, sans-serif"}}>Hello, {JSON.parse(sessionStorage.getItem('userPilotsDetails')).full_name}</h6>
                 </div><p></p>
                 <NotificationContainer />
+                {/*here we check if the data has been loaded*/}
                 {this.state.loading ? (this.state.edit ? this.renderFORM() : this.showProjects()) :
                 <div className='sweet-loading'>
                     <BeatLoader color={'#123abc'} />
